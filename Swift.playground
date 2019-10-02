@@ -1,0 +1,33 @@
+
+protocol Database{
+    func connectionString() -> String
+}
+
+struct DatabaseList {
+    var elements: [(String, Database)]
+
+    init(_ elements: KeyValuePairs<String, Database>) {
+        self.elements = Array(elements)
+    }
+}
+
+class DB_Oracle: Database
+{
+    func connectionString() -> String {
+        return "Oracle Database Connection String"
+    }
+}
+
+class DB_SQLServer: Database
+{
+    func connectionString() -> String {
+        return "SQL Server Database Connection String"
+    }
+}
+
+let pairs = DatabaseList(["Oracle": DB_Oracle(), "SQLServer": DB_SQLServer()])
+let dataBaseChoice = "SQLServer"
+
+
+print(pairs.elements.first{ $0.0 == dataBaseChoice}?.1.connectionString() ?? <#default value#>)
+
